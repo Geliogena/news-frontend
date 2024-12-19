@@ -13,9 +13,14 @@ function HomePage() {
   const [news, setNews] = useState<News[]>([]);
 
   useEffect(() => {
-    axios.get('/api/news')
-      .then(response => setNews(response.data))
-      .catch(error => console.error(error));
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/news`)
+      .then(response => {
+        console.log("Новини отримано:", response.data);
+        setNews(response.data);
+      })
+      .catch(error => {
+        console.error("Помилка отримання новин:", error.response || error.message);
+      });
   }, []);
 
   return (

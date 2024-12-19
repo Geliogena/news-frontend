@@ -10,27 +10,44 @@ function AddEditNews() {
 
   useEffect(() => {
     if (id) {
-      axios.get(`/api/news/${id}`)
-        .then(response => {
+      const token = localStorage.getItem('token');
+      axios
+        .get(`/api/news/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        })
+        .then((response) => {
           setTitle(response.data.title);
           setText(response.data.text);
         })
-        .catch(error => console.error(error));
+        .catch((error) => console.error(error));
     }
   }, [id]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data = { title, text };
+    const token = localStorage.getItem('token'); 
 
     if (id) {
-      axios.put(`/api/news/${id}`, data)
+      axios
+        .put(`/api/news/${id}`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        })
         .then(() => navigate('/'))
-        .catch(error => console.error(error));
+        .catch((error) => console.error(error));
     } else {
-      axios.post('/api/news', data)
+      axios
+        .post('/api/news', data, {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        })
         .then(() => navigate('/'))
-        .catch(error => console.error(error));
+        .catch((error) => console.error(error));
     }
   };
 
