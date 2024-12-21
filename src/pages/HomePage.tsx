@@ -26,6 +26,7 @@ function HomePage() {
   return (
     <div>
       <h1>Новини</h1>
+      <Link to="/login">Увійти</Link>
       <Link to="/add">Додати новину</Link>
       <div>
         {news.map((item) => (
